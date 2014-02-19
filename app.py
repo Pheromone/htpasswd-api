@@ -7,14 +7,16 @@ from path import path
 from models import List
 import logging
 import slugify
+import os
 
+here = lambda * x: os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
 app = Flask(__name__)
 api = restful.Api(app)
 PORT = 7000
 IP = '127.0.0.1'
 DEBUG = True
 #PASSWORDS_PATH = '/etc/nginx/passwords'
-PASSWORDS_PATH = '../passwords'
+PASSWORDS_PATH = here() + '/passwords'
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -74,13 +76,11 @@ class ListApi(restful.Resource):
 
     # Adds a user to the list
     def post(self, slug):
-        print 'salut'
-        return self.get(slug)
-        #with auth(PASSWORDS_PATH + '/' + slug) as usersdb:
-        #    username = request.json['username']
-        #    password = request.json['password']
-        #    usersdb.add(username, password)
-        #    return {'users': usersdb.users}
+        with auth(PASSWORDS_PATH + '/' + slug) as usersdb:
+            username = request.json['username']
+            password = request.json['password']
+            usersdb.add(username, password)
+            return {'users': usersdb.users}
 
 
 class UsersApi(restful.Resource):
