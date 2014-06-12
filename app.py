@@ -1,4 +1,4 @@
-#-=- encoding: utf-8 -=-
+# -=- encoding: utf-8 -=-
 from flask import Flask
 from flask import request
 from flask.ext import restful
@@ -15,7 +15,7 @@ api = restful.Api(app)
 PORT = 7000
 IP = '127.0.0.1'
 DEBUG = True
-#PASSWORDS_PATH = '/etc/nginx/passwords'
+# PASSWORDS_PATH = '/etc/nginx/passwords'
 PASSWORDS_PATH = here() + '/passwords'
 
 logger = logging.getLogger(__name__)
@@ -52,6 +52,7 @@ class ListsApi(restful.Resource):
 
     # Get all the lists
     def get(self):
+        logger.debug(self.lists)
         return {'lists': [htlist.__json__() for htlist in self.lists]}
 
     # Add a new list
@@ -65,10 +66,10 @@ class ListsApi(restful.Resource):
 class ListApi(restful.Resource):
     # Gets a single list with all the user in it
     def get(self, slug):
-        app.logger.debug('salut')
         htlist = path(PASSWORDS_PATH + '/' + slug)
         htpassword = List(htlist.name, htlist)
-        return {'users': [{'username': user} for user in htpassword.users], 'slug': slug}
+        return {'users': [{'username': user} for user
+                          in htpassword.users], 'slug': slug}
 
     def delete(self, slug):
         htlist = path(PASSWORDS_PATH + '/' + slug)
