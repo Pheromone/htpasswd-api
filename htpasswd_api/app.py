@@ -4,7 +4,7 @@ from flask import request
 from flask.ext import restful
 from htpasswd import Basic as auth
 from path import path
-from models import List
+from htpasswd_api.models import List
 import logging
 import slugify
 import os
@@ -16,11 +16,12 @@ PORT = 7000
 IP = '127.0.0.1'
 DEBUG = True
 # PASSWORDS_PATH = '/etc/nginx/passwords'
-PASSWORDS_PATH = here() + '/passwords'
+PASSWORDS_PATH = os.environ.get('PASSWORDS_PATH', here() + '/passwords')
+LOGS = os.environ.get('LOGS', '{}/htpasswdapi.log'.format(here()))
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('{}/htpasswdapi.log'.format(here()))
+handler = logging.FileHandler(LOGS)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
