@@ -104,6 +104,3 @@ class UsersApi(restful.Resource):
 api.add_resource(ListsApi, '/')
 api.add_resource(ListApi, '/<string:slug>')
 api.add_resource(UsersApi, '/<string:list_slug>/<string:username>')
-
-if __name__ == '__main__':
-    app.run(host=IP, port=PORT, debug=DEBUG)
