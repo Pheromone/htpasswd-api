@@ -17,7 +17,7 @@ IP = '127.0.0.1'
 DEBUG = os.environ.get('DEBUG', "1") == "1"
 # PASSWORDS_PATH = '/etc/nginx/passwords'
 PASSWORDS_PATH = os.environ.get('PASSWORDS_PATH', here() + '/passwords')
-LOGS = os.environ.get('LOGS', '/var/log/htpasswd-api/htpasswdapi.log')
+LOGS = os.environ.get('LOGS', '/var/log/htpasswd_api/htpasswdapi.log')
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
