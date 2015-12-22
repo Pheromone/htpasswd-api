@@ -14,7 +14,7 @@ app = Flask(__name__)
 api = restful.Api(app)
 PORT = 7000
 IP = '127.0.0.1'
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', "1") == "1"
 # PASSWORDS_PATH = '/etc/nginx/passwords'
 PASSWORDS_PATH = os.environ.get('PASSWORDS_PATH', here() + '/passwords')
 LOGS = os.environ.get('LOGS', '{}/htpasswdapi.log'.format(here()))
